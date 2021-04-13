@@ -16,6 +16,9 @@ import { ProjectComponent } from './components/projects/project/project.componen
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Dialog } from './components/dialog/dialog.component';
+import { ShortenPipe } from './pipes/shorten.pipe';
+import { MembersComponent } from './components/members/members.component';
+import { MemberComponent } from './components/members/member/member.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { Dialog } from './components/dialog/dialog.component';
     UserEditComponent,
     ProjectComponent,
     Dialog,
+    ShortenPipe,
+    MembersComponent,
+    MemberComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,12 @@
-<p>project works!</p>
+
+
+<mat-card class="card">
+  <div fxLayout="row" fxLayoutAlign="start start">
+    <div fxFlex="80%" fxFlexFill>
+      <mat-card-title>{{name_with_namespaces | shorten}}</mat-card-title>
+      <mat-card-subtitle class="mt-10">{{description}}</mat-card-subtitle>
+    </div>
+    <div fxFlex="20%" fxFlexFill>
+    </div>
+  </div>
+</mat-card>

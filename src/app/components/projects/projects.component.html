@@ -1,1 +1,6 @@
-<p>projects works!</p>
+
+
+<app-project *ngFor="let project of projects"
+             [name_with_namespaces]="project.name_with_namespace"
+             [description]="project.description">
+</app-project>

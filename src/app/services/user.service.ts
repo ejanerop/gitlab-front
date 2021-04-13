@@ -20,7 +20,8 @@ export class UserService {
     return this.http.get(url , { observe : 'response', headers : headers });
   }
 
-  user( id : string ) {
+  user( id : string )
+  {
 
     const url = `${this.url}/user/${id}`;
 

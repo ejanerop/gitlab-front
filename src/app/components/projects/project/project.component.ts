@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-project',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
+
+  @Input() name : string = '';
+  @Input() description : string = '';
+  @Input() name_with_namespaces : string = '';
 
   constructor() { }
 
