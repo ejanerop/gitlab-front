@@ -1,1 +1,8 @@
 <p>home works!</p>
+
+<h2 *ngIf="isAuth">
+  You are authenticated
+</h2>
+<h2 *ngIf="!isAuth">
+  You are not authenticated
+</h2>

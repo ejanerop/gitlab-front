@@ -14,6 +14,7 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserEditComponent } from './components/user/user-edit/user-edit.component';
 import { ProjectComponent } from './components/projects/project/project.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ProjectsComponent,
     UserListComponent,
     UserEditComponent,
-    ProjectComponent
+    ProjectComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

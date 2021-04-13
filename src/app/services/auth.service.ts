@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
@@ -9,19 +9,20 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   api_token : string | null = '';
+  user : string | null = '';
   url = environment.api_url;
 
   constructor( private http : HttpClient ) {
 
-    this.loadToken();
+    this.loadInfo();
 
   }
 
-  login(){
+  login( data : any ){
 
     const url = `${this.url}/login`;
 
-    return this.http.get(url, {observe: 'response'});
+    return this.http.post(url, data, {observe: 'response'});
 
   }
 
@@ -30,49 +31,58 @@ export class AuthService {
     const url = `${this.url}/logout`;
 
     const token = this.api_token;
-    return this.http.get(url).pipe( map( (resp : any) => {
-      this.removeToken();
+
+    const headers = new HttpHeaders({'Authorization':`Bearer ${token}`});
+
+    return this.http.get(url, {headers : headers}).pipe( map( (resp : any) => {
+      this.removeInfo();
       return resp;
     })
     );
 
   }
 
-  saveToken( token : string ) {
+  saveInfo( token : string, user : string ) {
 
     this.api_token = token;
-    localStorage.setItem('token', token);
+    localStorage.setItem( 'token', token );
+    localStorage.setItem( 'user', user );
 
     let hoy = new Date();
     hoy.setSeconds( 3600 );
 
-    localStorage.setItem('expira', hoy.getTime().toString() );
+    localStorage.setItem( 'expira', hoy.getTime().toString() );
 
   }
 
-  removeToken() {
+  removeInfo() {
 
     localStorage.removeItem('token');
     localStorage.removeItem('expira');
+    localStorage.removeItem('user');
 
   }
 
-  loadToken() {
+  loadInfo() {
 
     if ( localStorage.getItem('token') == null ) {
       this.api_token = '';
     } else {
       this.api_token = localStorage.getItem('token');
+      this.user = localStorage.getItem('user');
     }
 
     return this.api_token;
 
   }
 
-  get token() {
-
+  get token()
+  {
     return this.api_token;
-
+  }
+  get authUser()
+  {
+    return this.user;
   }
 
   isAuth() {
