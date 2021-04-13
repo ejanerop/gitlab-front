@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -25,6 +26,9 @@ export class LoginComponent implements OnInit {
     });
 
   }
+  openSnackBar(message: string, action: string) {
+    this.service.openSnackBar(message, action);
+  }
 
   ngOnInit(): void {
   }
@@ -43,13 +47,15 @@ export class LoginComponent implements OnInit {
     this.service.login(this.form.value).subscribe((resp : any)=>{
       this.router.navigateByUrl('/home');
       this.service.saveInfo( resp.body.token, resp.body.user.name );
-      console.log(resp);
-
+      this.openSnackBar('Inicio de sesión exitoso', 'Cerrar');
     },error => {
       if (error.status == 422){
-        //'Nombre de usuario y/o contraseña incorrectos'
+        this.openSnackBar('Usuario y/contraseña incorrectos', 'Cerrar');
+        Object.values(this.form.controls).forEach(ctrl => {
+          ctrl.setErrors({incorrect : true});
+        });
       }else {
-        //'Hubo un error con el servidor, pokeale a Andx o Eric'
+        this.openSnackBar('Error en el servidor', 'Cerrar');
       }
     });
   }

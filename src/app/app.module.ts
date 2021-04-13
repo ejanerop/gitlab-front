@@ -15,6 +15,7 @@ import { UserEditComponent } from './components/user/user-edit/user-edit.compone
 import { ProjectComponent } from './components/projects/project/project.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Dialog } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserListComponent,
     UserEditComponent,
     ProjectComponent,
+    Dialog,
   ],
   imports: [
     BrowserModule,

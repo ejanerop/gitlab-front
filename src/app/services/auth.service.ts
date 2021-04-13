@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +13,7 @@ export class AuthService {
   user : string | null = '';
   url = environment.api_url;
 
-  constructor( private http : HttpClient ) {
+  constructor( private http : HttpClient , private _snackBar : MatSnackBar) {
 
     this.loadInfo();
 
@@ -32,7 +33,7 @@ export class AuthService {
 
     const token = this.api_token;
 
-    const headers = new HttpHeaders({'Authorization':`Bearer ${token}`});
+    const headers = this.getAuthHeader();
 
     return this.http.get(url, {headers : headers}).pipe( map( (resp : any) => {
       this.removeInfo();
@@ -101,5 +102,18 @@ export class AuthService {
       return false;
     }
 
+  }
+
+  getAuthHeader() : HttpHeaders
+  {
+    const headers = new HttpHeaders({'Authorization':`Bearer ${this.api_token}`});
+
+    return headers;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

@@ -18,6 +18,7 @@ export class ToolbarComponent {
   logout() {
     this.authService.logout().subscribe(( resp : any ) => {
       this.router.navigateByUrl('/home');
+      this.authService.openSnackBar('Cierre de sesión exitoso', 'Cerrar');
     });
   }
 
