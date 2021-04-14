@@ -14,11 +14,13 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserEditComponent } from './components/user/user-edit/user-edit.component';
 import { ProjectComponent } from './components/projects/project/project.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Dialog } from './components/dialog/dialog.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { MembersComponent } from './components/members/members.component';
 import { MemberComponent } from './components/members/member/member.component';
+import { MemberPageComponent } from './components/members/member-page/member-page.component';
+import { LevelPipe } from './pipes/level.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { MemberComponent } from './components/members/member/member.component';
     ShortenPipe,
     MembersComponent,
     MemberComponent,
+    MemberPageComponent,
+    LevelPipe,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,8 @@ import { MemberComponent } from './components/members/member/member.component';
     MaterialModule,
     HttpClientModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

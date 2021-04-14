@@ -1,6 +1,17 @@
-
+<mat-card class="card">
+  <form [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="end start">
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrar</mat-label>
+      <input matInput type="text" placeholder="nombre o usuario.." formControlName="name" (keyup)="find()">
+    </mat-form-field>
+  </div>
+</form>
+</mat-card>
 
 <app-project *ngFor="let project of projects"
              [name_with_namespaces]="project.name_with_namespace"
-             [description]="project.description">
+             [description]="project.description"
+             [avatar_url]="project.avatar_url"
+             [visible]="project.visible">
 </app-project>

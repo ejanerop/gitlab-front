@@ -1,12 +1,19 @@
-<mat-card class="card">
+<mat-card class="card" *ngIf="visible">
   <mat-card-header>
     <img mat-card-avatar src="{{avatar_url}}">
-    <mat-card-title>{{name}}</mat-card-title>
-    <mat-card-subtitle><a href=""> @{{username}}</a></mat-card-subtitle>
+    <mat-card-title [matTooltip]="'ID: '+ id">{{name}}</mat-card-title>
+    <mat-card-subtitle><a target="_blank" href="{{web_url}}"> @{{username}}</a></mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="end start">
-      <button mat-raised-button color="primary">Ver proyectos</button>
+      <div fxFlex="50%" fxFlexAlign="start">
+        <mat-chip-list>
+            <mat-chip color="primary">{{access_level | level}}</mat-chip>
+        </mat-chip-list>
+      </div>
+      <div fxFlex="50%" fxFlexAlign="start">
+        <button mat-raised-button color="primary" style=" float: right;" (click)="member(id)">Ver proyectos</button>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

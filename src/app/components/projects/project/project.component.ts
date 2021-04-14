@@ -10,6 +10,8 @@ export class ProjectComponent implements OnInit {
   @Input() name : string = '';
   @Input() description : string = '';
   @Input() name_with_namespaces : string = '';
+  @Input() avatar_url? : string = '';
+  @Input() visible : boolean = true;
 
   constructor() { }
 

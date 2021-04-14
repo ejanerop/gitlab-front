@@ -6,29 +6,29 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MemberService {
+export class GroupService {
 
   url : string = environment.api_url;
 
   constructor( private http : HttpClient, private auth : AuthService ) { }
 
-  members()
+  group( group : string )
   {
-    const url = `${this.url}/member`;
+    const url = `${this.url}/group/${group}`;
     const headers = this.auth.getAuthHeader();
     return this.http.get(url , { observe : 'response', headers : headers });
   }
 
-  member( id : string )
+  members( group : string )
   {
-    const url = `${this.url}/member/${id}`;
+    const url = `${this.url}/group/${group}/members`;
     const headers = this.auth.getAuthHeader();
     return this.http.get(url , { observe : 'response', headers : headers });
   }
 
-  memberships( id : string )
+  projects( group : string )
   {
-    const url = `${this.url}/member/${id}/memberships`;
+    const url = `${this.url}/group/${group}/projects`;
     const headers = this.auth.getAuthHeader();
     return this.http.get(url , { observe : 'response', headers : headers });
   }

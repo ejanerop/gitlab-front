@@ -22,6 +22,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from "@angular/material/badge";
 
 
 
@@ -50,7 +51,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatChipsModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatBadgeModule
   ],
   exports : [
     MatButtonModule,
@@ -74,7 +76,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatChipsModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatBadgeModule
   ]
 })
 export class MaterialModule { }

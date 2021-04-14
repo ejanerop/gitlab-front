@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { MemberPageComponent } from './components/members/member-page/member-page.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { UserEditComponent } from './components/user/user-edit/user-edit.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path : 'user/:id' , component : UserEditComponent, canActivate : [AuthGuard]},
   {path : 'project' , component : ProjectsComponent, canActivate : [AuthGuard]},
   {path : 'member' , component : MembersComponent, canActivate : [AuthGuard]},
+  {path : 'member/:id' , component : MemberPageComponent, canActivate : [AuthGuard]},
   {path : '**' , pathMatch : 'full' , redirectTo : 'home'},
 ];
 

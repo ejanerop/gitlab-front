@@ -1,6 +1,21 @@
 
+<mat-card class="card">
+  <form [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="end start">
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrar</mat-label>
+      <input matInput type="text" placeholder="nombre o usuario.." formControlName="name" (keyup)="find()">
+    </mat-form-field>
+  </div>
+</form>
+</mat-card>
+
 <app-member *ngFor="let user of users"
+            [id]="user.id"
             [name]="user.name"
             [username]="user.username"
             [state]="user.state"
-            [avatar_url]="user.avatar_url"></app-member>
+            [avatar_url]="user.avatar_url"
+            [web_url]="user.web_url"
+            [access_level]="user.access_level"
+            [visible]="user.visible"></app-member>

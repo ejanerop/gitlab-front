@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { GitUser } from 'src/app/models/git-user';
 import { Project } from 'src/app/models/project';
-import { ProjectService } from 'src/app/services/project.service';
+import { GroupService } from 'src/app/services/group.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-projects',
@@ -11,14 +13,19 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectsComponent implements OnInit {
 
   projects : Project[] = [];
+  form : FormGroup = new FormGroup({});
 
-  constructor( private projectService : ProjectService ) { }
+  constructor( private groupService : GroupService, private fb : FormBuilder ) {
+    this.form = this.fb.group({
+      'name' : ['']
+    });
+  }
 
   ngOnInit(): void {
-    this.projectService.projects().subscribe(( resp : any ) => {
+    this.groupService.projects(environment.group_id).subscribe(( resp : any ) => {
       console.log(resp.body);
       for (const item of resp.body) {
-        let lenght = this.projects.push(new Project(item.id, item.name, item.description, item.name_with_namespace));
+        let lenght = this.projects.push(new Project(item.id, item.name, item.description, item.name_with_namespace, item.avatar_url));
         if (item.owner) {
           this.projects[lenght-1].owner = new GitUser(
             item.owner.id,
@@ -27,10 +34,20 @@ export class ProjectsComponent implements OnInit {
             item.owner.state,
             item.owner.web_url,
             item.owner.avatar_url);
+          }
         }
-      }
-      console.log(this.projects);
-    });
-  }
+        console.log(this.projects);
+      });
+    }
 
-}
+    get name() {
+      return this.form.get('name')?.value;
+    }
+
+    find() {
+      this.projects.forEach(project => {
+        project.checkName(this.name);
+      });
+    }
+
+  }

@@ -1,12 +1,16 @@
-
-
-<mat-card class="card">
-  <div fxLayout="row" fxLayoutAlign="start start">
-    <div fxFlex="80%" fxFlexFill>
-      <mat-card-title>{{name_with_namespaces | shorten}}</mat-card-title>
-      <mat-card-subtitle class="mt-10">{{description}}</mat-card-subtitle>
+<mat-card class="card" *ngIf="visible">
+  <mat-card-header>
+    <img mat-card-avatar [src]="avatar_url ? avatar_url : 'assets/project.png'">
+    <mat-card-title>{{name_with_namespaces}}</mat-card-title>
+    <mat-card-subtitle class="mt-10">{{description | shorten}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="end start">
+      <div fxFlex="50%" fxFlexAlign="start">
+      </div>
+      <div fxFlex="50%" fxFlexAlign="start">
+        <button mat-raised-button color="primary" style=" float: right;">Ver proyecto</button>
+      </div>
     </div>
-    <div fxFlex="20%" fxFlexFill>
-    </div>
-  </div>
+  </mat-card-content>
 </mat-card>
