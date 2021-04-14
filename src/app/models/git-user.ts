@@ -37,7 +37,7 @@ export class GitUser {
     }
 
     includes( name : string ) {
-      return ( this.name.includes(name) || this.username.includes(name) );
+      return ( this.name.toLowerCase().includes(name.toLowerCase()) || this.username.toLowerCase().includes(name.toLowerCase()) );
     }
 
   }

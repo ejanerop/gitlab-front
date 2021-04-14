@@ -26,6 +26,13 @@ export class GroupService {
     return this.http.get(url , { observe : 'response', headers : headers });
   }
 
+  deleteMember( group : string , user : string )
+  {
+    const url = `${this.url}/group/${group}/members/${user}`;
+    const headers = this.auth.getAuthHeader();
+    return this.http.delete(url , { observe : 'response', headers : headers });
+  }
+
   projects( group : string )
   {
     const url = `${this.url}/group/${group}/projects`;

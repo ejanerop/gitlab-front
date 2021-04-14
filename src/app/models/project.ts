@@ -32,6 +32,6 @@ export class Project {
   }
 
   includes( name : string ) {
-    return ( this.name.includes(name) );
+    return ( this.name.toLowerCase().includes(name.toLowerCase()) );
   }
 }

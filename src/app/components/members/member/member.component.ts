@@ -1,5 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { GroupService } from 'src/app/services/group.service';
+import { Dialog } from '../../dialog/dialog.component';
 
 @Component({
   selector: 'app-member',
@@ -16,14 +20,16 @@ export class MemberComponent implements OnInit {
   @Input() web_url : string = '';
   @Input() visible : boolean = true;
   @Input() access_level : number | undefined = 0;
+  @Output() remove : EventEmitter<string> = new EventEmitter();
 
-  constructor( private router : Router ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  member( id : number ) {
-    this.router.navigateByUrl(`/member/${id}`);
+  removeMember() {
+    this.remove.emit(this.id.toString());
   }
+
 
 }

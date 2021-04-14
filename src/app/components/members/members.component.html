@@ -18,4 +18,5 @@
             [avatar_url]="user.avatar_url"
             [web_url]="user.web_url"
             [access_level]="user.access_level"
-            [visible]="user.visible"></app-member>
+            [visible]="user.visible"
+            (remove)="delete( $event )"></app-member>
