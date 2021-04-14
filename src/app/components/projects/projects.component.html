@@ -10,6 +10,7 @@
 </mat-card>
 
 <app-project *ngFor="let project of projects"
+             [id]="project.id.toString()"
              [name_with_namespaces]="project.name_with_namespace"
              [description]="project.description"
              [avatar_url]="project.avatar_url"

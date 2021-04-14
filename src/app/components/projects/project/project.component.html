@@ -6,10 +6,30 @@
   </mat-card-header>
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="end start">
-      <div fxFlex="50%" fxFlexAlign="start">
+      <div fxFlex="100%" fxFlexAlign="start">
+
+        <table *ngIf="initialized && members.length != 0" mat-table [dataSource]="members" class="mat-elevation-z8 full-width">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef  class="w-20"> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="btn-row">
+                <button type="button" mat-flat-button color="warn" (click)="delete(element.id)"><mat-icon>delete</mat-icon></button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
       </div>
-      <div fxFlex="50%" fxFlexAlign="start">
-        <button mat-raised-button color="primary" style=" float: right;">Ver proyecto</button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end start">
+      <div fxFlex="50%" fxFlexAlign="end">
+        <button mat-raised-button color="primary" *ngIf="!initialized" style=" float: right;" (click)="showMembers()">Ver proyecto</button>
       </div>
     </div>
   </mat-card-content>
