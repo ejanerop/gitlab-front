@@ -3,12 +3,12 @@
       <mat-card class="card">
         <mat-card-title>
           <div fxLayout="row" fxLayoutAlign="end start">
-            <div fxFlex="50%" fxFlexFill style="float: left;">
+            <div fxFlex="20%" fxFlexFill style="float: left;">
               <button mat-raised-button color="primary" (click)="back()">
                 <mat-icon>arrow_back</mat-icon>
               </button>
             </div>
-            <div fxFlex="50%" fxFlexFill>
+            <div fxFlex="80%" fxFlexFill>
               <ng-container *ngIf="!loading">
                 <span *ngIf="!isNew" style="float: right;">Editar usuario : {{name}}</span>
                 <span *ngIf="isNew" style="float: right;">Nuevo usuario</span>

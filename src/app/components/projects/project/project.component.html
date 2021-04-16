@@ -5,10 +5,13 @@
     <mat-card-subtitle class="mt-10">{{description | shorten}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+
+    <app-loading [loading]="loading" [height]="10"></app-loading>
+
     <div fxLayout="row" fxLayoutAlign="end start">
       <div fxFlex="100%" fxFlexAlign="start">
 
-        <table *ngIf="initialized && members.length != 0" mat-table [dataSource]="members" class="mat-elevation-z8 full-width">
+        <table *ngIf="visibleTable" mat-table [dataSource]="members" class="mat-elevation-z8 full-width">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Usuario </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>

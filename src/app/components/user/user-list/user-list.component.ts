@@ -69,6 +69,12 @@ export class UserListComponent implements OnInit {
     }, error => {
       console.error(error);
       this.loading = false;
+      if (error.status == 0) {
+        this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+      }else {
+        this.loading = false;
+        this.util.openSnackBar(error.error, 'Cerrar');
+      }
     });
   }
 

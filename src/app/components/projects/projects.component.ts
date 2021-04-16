@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { GitUser } from 'src/app/models/git-user';
 import { Project } from 'src/app/models/project';
 import { GroupService } from 'src/app/services/group.service';
+import { UtilService } from 'src/app/services/util.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,7 +17,7 @@ export class ProjectsComponent implements OnInit {
   projects : Project[] = [];
   form : FormGroup = new FormGroup({});
 
-  constructor( private groupService : GroupService, private fb : FormBuilder ) {
+  constructor( private groupService : GroupService, private fb : FormBuilder, private util : UtilService ) {
     this.form = this.fb.group({
       'name' : ['']
     });
@@ -38,6 +39,13 @@ export class ProjectsComponent implements OnInit {
           }
         }
         this.loading = false;
+      }, error => {
+        this.loading = false;
+        if ( error.status == 0 ) {
+          this.util.openSnackBar( 'Sin respuesta del servidor', 'Cerrar' );
+        }else{
+          this.util.openSnackBar( error.error, 'Cerrar' );
+        }
       });
     }
 

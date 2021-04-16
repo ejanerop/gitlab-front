@@ -68,6 +68,14 @@ export class MembersComponent implements OnInit {
           ))
         }
         this.loading = false;
+      }, error => {
+        console.error(error);
+        this.loading = false;
+        if (error.status == 0) {
+          this.util.openSnackBar('Sin respuesta desde el servidor.', 'Cerrar');
+        }else {
+          this.util.openSnackBar(error.error, 'Cerrar');
+        }
       });
     }
 

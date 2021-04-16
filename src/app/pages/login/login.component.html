@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center start" style="height: 100vh" *ngIf="!loading">
-  <div fxFlex="10%" fxFlex.gt-sm="20%" fxFlex.lt-xl="30%" fxFlexAlign="center">
+  <div fxFlex.gt-sm="20%" fxFlex.lt-xl="30%" fxFlex.xs="70%" fxFlexAlign="center">
 
     <mat-card class="card">
 
@@ -16,7 +16,8 @@
             <div fxFlex="100%" fxFlexAlign="center">
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Usuario</mat-label>
-                <input matInput formControlName="name" type="text" required placeholder="">
+                <input matInput formControlName="name" type="text" required  autocomplete="name">
+                <mat-error>Este campo es requerido</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -24,7 +25,8 @@
             <div fxFlex="100%" fxFlexAlign="center">
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Contraseña</mat-label>
-                <input matInput formControlName="password" type="password" required>
+                <input matInput formControlName="password" type="password" required autocomplete="current-password">
+                <mat-error>Este campo es requerido</mat-error>
               </mat-form-field>
             </div>
           </div>

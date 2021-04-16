@@ -56,6 +56,17 @@ export class UserEditComponent implements OnInit {
             'token' : resp.body.gitlab_token
           });
           this.loading = false;
+        }, error => {
+          console.error(error);
+          this.loading = false;
+          if (error.status == 0) {
+            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+          }else if (error.status == 404){
+            this.util.openSnackBar('Usuario no encontrado', 'Cerrar');
+            this.router.navigateByUrl('/user');
+          }else {
+            this.util.openSnackBar(error.error, 'Cerrar');
+          }
         });
       }
       this.loading = false;
@@ -114,7 +125,9 @@ export class UserEditComponent implements OnInit {
           console.log(resp);
           this.util.openSnackBar(`Usuario ${data.name} creado correctamente` , 'Cerrar');
         }, error => {
-          console.log(error.error.errors);
+          if (error.status == 0) {
+            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+          }
           if (error.error.errors.name) {
             this.form.get('name')?.setErrors({taken : true});
           }
@@ -129,7 +142,9 @@ export class UserEditComponent implements OnInit {
           this.router.navigateByUrl('/user');
           this.util.openSnackBar(`Usuario ${data.name} editado correctamente` , 'Cerrar');
         }, error => {
-          console.log(error.error.errors);
+          if (error.status == 0) {
+            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+          }
           if (error.error.errors.name) {
             this.form.get('name')?.setErrors({taken : true});
           }

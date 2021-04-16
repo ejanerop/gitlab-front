@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
     this.form = this.fb.group({
       name : ['', Validators.required],
-      password : ['', [Validators.required, Validators.minLength(8)]],
+      password : ['', [Validators.required]],
     });
 
   }
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     },error => {
       if (error.status == 422){
         this.loading = false;
-        this.openSnackBar('Usuario y/contraseña incorrectos', 'Cerrar');
+        this.openSnackBar('Usuario y/o contraseña incorrectos', 'Cerrar');
         Object.values(this.form.controls).forEach(ctrl => {
           ctrl.setErrors({incorrect : true});
         });

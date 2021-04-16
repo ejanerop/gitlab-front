@@ -20,6 +20,8 @@ export class ProjectComponent implements OnInit {
   @Input() avatar_url? : string = '';
   @Input() visible : boolean = true;
 
+  loading : boolean = false;
+
   members : GitUser[] = [];
   initialized : boolean = false ;
   displayedColumns: string[] = ['name', 'actions'];
@@ -30,10 +32,9 @@ export class ProjectComponent implements OnInit {
   }
 
   initMembers() {
+    this.loading = true;
     this.projectService.members( this.id ).subscribe(( resp : any ) => {
       this.members = [];
-      console.log(resp);
-      this.initialized = true;
       for (const item of resp.body) {
         this.members.push(
           new GitUser(
@@ -47,7 +48,13 @@ export class ProjectComponent implements OnInit {
           )
         );
       }
+      this.initialized = true;
+      this.loading = false;
     });
+  }
+
+  get visibleTable() {
+    return (this.initialized && this.members.length != 0 && !this.loading);
   }
 
 
@@ -66,11 +73,13 @@ export class ProjectComponent implements OnInit {
       }
     }).afterClosed().subscribe(confirmed => {
       if(confirmed) {
+        this.loading = true;
         this.projectService.deleteMember(this.id, user_id).subscribe(( resp : any ) =>{
-          console.log(resp);
+          this.loading = false;
           this.initMembers();
           this.util.openSnackBar('Usuario removido correctamente', 'Cerrar');
         }, error => {
+          this.loading = false;
           this.util.openSnackBar(error.error, 'Cerrar');
         });
       }

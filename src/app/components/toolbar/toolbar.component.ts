@@ -20,6 +20,13 @@ export class ToolbarComponent {
     this.authService.logout().subscribe(( resp : any ) => {
       this.login();
       this.util.openSnackBar('Cierre de sesión exitoso', 'Cerrar');
+    }, error => {
+      console.error(error);
+      if (error.status == 0) {
+        this.util.openSnackBar('Sin respuesta desde el servidor.', 'Cerrar');
+      }else {
+        this.util.openSnackBar(error.error, 'Cerrar');
+      }
     });
   }
 
