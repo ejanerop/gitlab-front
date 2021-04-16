@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +12,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   form : FormGroup;
+  loading : boolean = false;
 
-  constructor( private service : AuthService, private fb : FormBuilder, private router : Router ) {
+  constructor( private service : AuthService, private fb : FormBuilder, private util : UtilService, private router : Router ) {
     this.form = new FormGroup({});
     this.createForm();
   }
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   }
   openSnackBar(message: string, action: string) {
-    this.service.openSnackBar(message, action);
+    this.util.openSnackBar(message, action);
   }
 
   ngOnInit(): void {
@@ -44,17 +45,22 @@ export class LoginComponent implements OnInit {
 
     console.log(this.form.value);
 
+    this.loading = true;
+
     this.service.login(this.form.value).subscribe((resp : any)=>{
+      this.loading = false;
       this.router.navigateByUrl('/home');
       this.service.saveInfo( resp.body.token, resp.body.user.name );
       this.openSnackBar('Inicio de sesión exitoso', 'Cerrar');
     },error => {
       if (error.status == 422){
+        this.loading = false;
         this.openSnackBar('Usuario y/contraseña incorrectos', 'Cerrar');
         Object.values(this.form.controls).forEach(ctrl => {
           ctrl.setErrors({incorrect : true});
         });
       }else {
+        this.loading = false;
         this.openSnackBar('Error en el servidor', 'Cerrar');
       }
     });
