@@ -12,9 +12,10 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectsComponent implements OnInit {
 
-  loading  : boolean   = false;
-  projects : Project[] = [];
-  form     : FormGroup = new FormGroup({});
+  loading   : boolean   = false;
+  projects  : Project[] = [];
+  form      : FormGroup = new FormGroup({});
+  groupName : string    = '';
 
   constructor(
     private groupService : GroupService,
@@ -28,6 +29,7 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void
   {
+    this.initGroup();
     this.loading = true;
     this.groupService.projects(environment.group_id).subscribe(( resp : any ) => {
       for (const item of resp.body) {
@@ -65,6 +67,14 @@ export class ProjectsComponent implements OnInit {
   get name()
   {
     return this.form.get('name')?.value;
+  }
+
+  initGroup()
+  {
+    this.groupService.group(environment.group_id).subscribe( ( resp : any ) => {
+      console.log(resp);
+      this.groupName = resp.body.name;
+    });
   }
 
   find()

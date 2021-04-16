@@ -1,6 +1,10 @@
 <mat-card class="card" *ngIf="!loading">
   <form [formGroup]="form">
-  <div fxLayout="row" fxLayoutAlign="end start">
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <mat-form-field appearance="outline">
+      <mat-label>Grupo</mat-label>
+      <input matInput type="text" readonly [value]="groupName">
+    </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Filtrar</mat-label>
       <input matInput type="text" placeholder="nombre del proyecto ..." formControlName="name" (keyup)="find()">

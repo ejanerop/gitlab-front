@@ -6,16 +6,16 @@ import { GitUser } from 'src/app/models/git-user';
 import { GroupService } from 'src/app/services/group.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilService } from 'src/app/services/util.service';
-
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html'
 })
 export class MembersComponent implements OnInit {
 
-  form    : FormGroup = new FormGroup({});
-  loading : boolean   = false;
-  users   : GitUser[] = [];
+  form      : FormGroup = new FormGroup({});
+  groupName : string    = '';
+  loading   : boolean   = false;
+  users     : GitUser[] = [];
 
   constructor(
     private groupService : GroupService,
@@ -35,7 +35,8 @@ export class MembersComponent implements OnInit {
 
   ngOnInit(): void
   {
-    this.refresh()
+    this.initGroup();
+    this.refresh();
   }
 
   delete( member : string )
@@ -86,6 +87,14 @@ export class MembersComponent implements OnInit {
       }else {
         this.util.openSnackBar(error.error, 'Cerrar');
       }
+    });
+  }
+
+  initGroup()
+  {
+    this.groupService.group(environment.group_id).subscribe( ( resp : any ) => {
+      console.log(resp);
+      this.groupName = resp.body.name;
     });
   }
 
