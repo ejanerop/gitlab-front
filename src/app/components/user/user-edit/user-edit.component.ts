@@ -13,9 +13,10 @@ import { ValidatorService } from 'src/app/services/validator.service';
 })
 export class UserEditComponent implements OnInit {
 
-  id : string | null = null;
-  form : FormGroup = new FormGroup({});
-  email_pattern : string = `[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`
+  loading : boolean = false;
+  id      : string | null = null;
+  name    : string = '';
+  form    : FormGroup = new FormGroup({});
 
   constructor(
     private router : Router ,
@@ -40,21 +41,28 @@ export class UserEditComponent implements OnInit {
     ngOnInit(): void {
       this.id = this.route.snapshot.paramMap.get('id');
       console.log(this.id);
+      this.loading = true;
 
       if (!(this.id == 'new' || this.id == null )) {
         this.userService.user(this.id).subscribe((resp : any) => {
-          console.log(resp);
           this.form.get('password')?.setValidators(null);
           this.form.get('password')?.setValidators(Validators.minLength(8));
           this.form.get('password_confirmation')?.setValidators(null);
           this.form.get('password_confirmation')?.setValidators(Validators.minLength(8));
+          this.name = resp.body.name;
           this.form.reset({
             'name'  : resp.body.name,
             'email' : resp.body.email,
             'token' : resp.body.gitlab_token
           });
+          this.loading = false;
         });
       }
+      this.loading = false;
+    }
+
+    get isNew() {
+      return this.id == 'new' || this.id == null;
     }
 
     get emailError() {

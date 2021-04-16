@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -21,12 +20,13 @@ import { MembersComponent } from './components/members/members.component';
 import { MemberComponent } from './components/members/member/member.component';
 import { LevelPipe } from './pipes/level.pipe';
 import { MainPageComponent } from './pages/main-page/main-page.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    LoginComponent,
     HomeComponent,
     ProjectsComponent,
     UserListComponent,
@@ -38,6 +38,8 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
     MemberComponent,
     LevelPipe,
     MainPageComponent,
+    LoadingComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

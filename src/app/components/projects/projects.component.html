@@ -1,4 +1,4 @@
-<mat-card class="card">
+<mat-card class="card" *ngIf="!loading">
   <form [formGroup]="form">
   <div fxLayout="row" fxLayoutAlign="end start">
     <mat-form-field appearance="outline">
@@ -16,3 +16,5 @@
              [avatar_url]="project.avatar_url"
              [visible]="project.visible">
 </app-project>
+
+<app-loading [loading]="loading" [height]="80"></app-loading>

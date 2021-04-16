@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -14,6 +13,7 @@ import { Dialog } from '../../dialog/dialog.component';
 })
 export class UserListComponent implements OnInit {
 
+  loading : boolean = false;
   users : User[] = [];
   displayedColumns: string[] = ['name', 'email', 'actions'];
 
@@ -45,12 +45,13 @@ export class UserListComponent implements OnInit {
       }
     }).afterClosed().subscribe(confirmed => {
       if(confirmed) {
+        this.loading = true;
         this.userService.deleteUser(element).subscribe(resp => {
-          console.log(resp);
           this.refresh();
           this.util.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
         }, (error) => {
           console.log(error);
+          this.loading = false;
           this.util.openSnackBar(error.error, 'Cerrar');
         });
       }
@@ -58,13 +59,16 @@ export class UserListComponent implements OnInit {
   }
 
   refresh() {
+    this.loading = true;
     this.userService.users().subscribe( (resp : any) => {
-      console.log(resp);
       this.users = [];
       for (const item of resp.body) {
         this.users.push(new User( item.id , item.name , item.email ));
       }
-      console.log(this.users);
+      this.loading = false;
+    }, error => {
+      console.error(error);
+      this.loading = false;
     });
   }
 

@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class MembersComponent implements OnInit {
 
+  loading : boolean = false;
   users : GitUser[] = [];
   form : FormGroup = new FormGroup({});
 
@@ -27,9 +28,9 @@ export class MembersComponent implements OnInit {
     return this.form.get('name')?.value;
   }
 
-ngOnInit(): void {
-  this.refresh()
-}
+  ngOnInit(): void {
+    this.refresh()
+  }
 
   delete( member : string ) {
     this.dialog.open(Dialog , {
@@ -39,31 +40,36 @@ ngOnInit(): void {
       }
     }).afterClosed().subscribe(confirmed => {
       if(confirmed) {
-        this.groupService.deleteMember(environment.group_id, member ).subscribe(resp => {
+        this.loading = true;
+        this.groupService.deleteMember(environment.group_id, member ).subscribe( resp => {
           this.refresh();
           this.util.openSnackBar('Usuario removido correctamente', 'Cerrar');
         }, (error) => {
+          this.loading = false;
           this.util.openSnackBar(error.error, 'Cerrar');
         });
       }
     });
   }
+
   refresh() {
+    this.loading = true;
     this.groupService.members(environment.group_id).subscribe((resp : any) => {
-    this.users = [];
-    for (const item of resp.body) {
-      this.users.push(new GitUser(
-        item.id,
-        item.name,
-        item.username,
-        item.state,
-        item.web_url,
-        item.avatar_url,
-        item.access_level ? item.access_level : 0
-      ))
+      this.users = [];
+      for (const item of resp.body) {
+        this.users.push(new GitUser(
+          item.id,
+          item.name,
+          item.username,
+          item.state,
+          item.web_url,
+          item.avatar_url,
+          item.access_level ? item.access_level : 0
+          ))
+        }
+        this.loading = false;
+      });
     }
-  });
-  }
 
   find() {
     this.users.forEach(user => {

@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectsComponent implements OnInit {
 
+  loading : boolean = false;
   projects : Project[] = [];
   form : FormGroup = new FormGroup({});
 
@@ -22,8 +23,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.groupService.projects(environment.group_id).subscribe(( resp : any ) => {
-      console.log(resp.body);
       for (const item of resp.body) {
         let lenght = this.projects.push(new Project(item.id, item.name, item.description, item.name_with_namespace, item.avatar_url));
         if (item.owner) {
@@ -36,7 +37,7 @@ export class ProjectsComponent implements OnInit {
             item.owner.avatar_url);
           }
         }
-        console.log(this.projects);
+        this.loading = false;
       });
     }
 

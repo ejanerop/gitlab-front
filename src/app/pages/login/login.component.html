@@ -42,7 +42,5 @@
   </div>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center" style="height: 100vh" *ngIf="loading">
-  <mat-spinner></mat-spinner>
-</div>
+<app-loading [loading]="loading" [height]="100"></app-loading>
 

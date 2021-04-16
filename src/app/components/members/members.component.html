@@ -1,5 +1,5 @@
 
-<mat-card class="card">
+<mat-card class="card" *ngIf="!loading">
   <form [formGroup]="form">
   <div fxLayout="row" fxLayoutAlign="end start">
     <mat-form-field appearance="outline">
@@ -19,4 +19,7 @@
             [web_url]="user.web_url"
             [access_level]="user.access_level"
             [visible]="user.visible"
-            (remove)="delete( $event )"></app-member>
+            (remove)="delete( $event )">
+</app-member>
+
+<app-loading [loading]="loading" [height]="80"></app-loading>
