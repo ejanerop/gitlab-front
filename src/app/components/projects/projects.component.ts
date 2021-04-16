@@ -72,7 +72,6 @@ export class ProjectsComponent implements OnInit {
   initGroup()
   {
     this.groupService.group(environment.group_id).subscribe( ( resp : any ) => {
-      console.log(resp);
       this.groupName = resp.body.name;
     });
   }

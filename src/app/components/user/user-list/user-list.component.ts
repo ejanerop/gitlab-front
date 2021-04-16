@@ -54,7 +54,6 @@ export class UserListComponent implements OnInit {
           this.refresh();
           this.util.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
         }, (error) => {
-          console.log(error);
           this.loading = false;
           this.util.openSnackBar(error.error, 'Cerrar');
         });
