@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { UtilService } from 'src/app/services/util.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
@@ -14,19 +15,20 @@ export class UserEditComponent implements OnInit {
 
   id : string | null = null;
   form : FormGroup = new FormGroup({});
+  email_pattern : string = `[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`
 
   constructor(
     private router : Router ,
     private fb : FormBuilder ,
     private route : ActivatedRoute ,
     private userService : UserService ,
-    private snack : MatSnackBar ,
+    private util : UtilService,
     private validators : ValidatorService
     ) {
 
       this.form = this.fb.group({
         'name' : ['', [Validators.required]],
-        'email' : ['', [Validators.required]],
+        'email' : ['', [Validators.required, Validators.email]],
         'password' : ['', [Validators.required , Validators.minLength(8)]],
         'password_confirmation' : ['', [Validators.required , Validators.minLength(8)]],
         'token' : ['', [Validators.required , Validators.maxLength(30)]]
@@ -47,14 +49,40 @@ export class UserEditComponent implements OnInit {
           this.form.get('password_confirmation')?.setValidators(null);
           this.form.get('password_confirmation')?.setValidators(Validators.minLength(8));
           this.form.reset({
-            'name' : resp.body.name,
+            'name'  : resp.body.name,
             'email' : resp.body.email,
             'token' : resp.body.gitlab_token
           });
         });
       }
-
     }
+
+    get emailError() {
+      if (this.form.get('email')?.hasError('required')) {
+        return 'El email es requerido';
+      } else {
+        return 'Introduce una direccion de correo válida';
+      }
+    };
+
+    get passError() {
+      if (this.form.get('password')?.hasError('required')) {
+        return 'La contraseña es requerida';
+      } else {
+        return 'La contraseña debe contener al menos 8 caracteres';
+      }
+    };
+
+    get passConfirmError() {
+      if ( this.form.get('password_confirm')?.hasError('notEqual') ) {
+        return 'Las confirmación de contraseña no coincide';
+      } else if ( this.form.get('password_confirm')?.hasError('minlength') ) {
+        return 'La contraseña debe contener al menos 8 caracteres';
+      } else {
+        return 'La confirmación de contraseña es requerida'
+      }
+    };
+
 
     back(){
       this.router.navigateByUrl('/user');
@@ -76,7 +104,7 @@ export class UserEditComponent implements OnInit {
         this.userService.createUser(data).subscribe(( resp : any ) => {
           this.router.navigateByUrl('/user');
           console.log(resp);
-          this.openSnackBar(`Usuario ${data.name} creado correctamente` , 'Cerrar');
+          this.util.openSnackBar(`Usuario ${data.name} creado correctamente` , 'Cerrar');
         }, error => {
           console.log(error.error.errors);
           if (error.error.errors.name) {
@@ -91,7 +119,7 @@ export class UserEditComponent implements OnInit {
 
         this.userService.editUser(data).subscribe(( resp : any ) => {
           this.router.navigateByUrl('/user');
-          this.openSnackBar(`Usuario ${data.name} editado correctamente` , 'Cerrar');
+          this.util.openSnackBar(`Usuario ${data.name} editado correctamente` , 'Cerrar');
         }, error => {
           console.log(error.error.errors);
           if (error.error.errors.name) {
@@ -102,12 +130,6 @@ export class UserEditComponent implements OnInit {
           }
         });
       }
-    }
-
-    openSnackBar(message: string, action: string) {
-      this.snack.open(message, action, {
-        duration: 2000,
-      });
     }
 
   }

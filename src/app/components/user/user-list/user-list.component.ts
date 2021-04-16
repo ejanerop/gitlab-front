@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { UtilService } from 'src/app/services/util.service';
 import { Dialog } from '../../dialog/dialog.component';
 
 @Component({
@@ -16,7 +17,12 @@ export class UserListComponent implements OnInit {
   users : User[] = [];
   displayedColumns: string[] = ['name', 'email', 'actions'];
 
-  constructor( private userService : UserService , private router : Router, public dialog: MatDialog , private snack : MatSnackBar ) { }
+  constructor(
+    private userService : UserService ,
+    private router : Router,
+    private dialog: MatDialog ,
+    private util : UtilService
+  ) { }
 
 
   ngOnInit(): void {
@@ -42,10 +48,10 @@ export class UserListComponent implements OnInit {
         this.userService.deleteUser(element).subscribe(resp => {
           console.log(resp);
           this.refresh();
-          this.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
+          this.util.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
         }, (error) => {
           console.log(error);
-          this.openSnackBar(error.error, 'Cerrar');
+          this.util.openSnackBar(error.error, 'Cerrar');
         });
       }
     });
@@ -59,12 +65,6 @@ export class UserListComponent implements OnInit {
         this.users.push(new User( item.id , item.name , item.email ));
       }
       console.log(this.users);
-    });
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snack.open(message, action, {
-      duration: 2000,
     });
   }
 

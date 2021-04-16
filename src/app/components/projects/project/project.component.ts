@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GitUser } from 'src/app/models/git-user';
 import { ProjectService } from 'src/app/services/project.service';
+import { UtilService } from 'src/app/services/util.service';
 import { Dialog } from '../../dialog/dialog.component';
 
 @Component({
@@ -23,7 +24,7 @@ export class ProjectComponent implements OnInit {
   initialized : boolean = false ;
   displayedColumns: string[] = ['name', 'actions'];
 
-  constructor( private projectService : ProjectService, public dialog: MatDialog, private snack : MatSnackBar ) { }
+  constructor( private projectService : ProjectService, public dialog: MatDialog, private util : UtilService ) { }
 
   ngOnInit(): void {
   }
@@ -68,19 +69,14 @@ export class ProjectComponent implements OnInit {
         this.projectService.deleteMember(this.id, user_id).subscribe(( resp : any ) =>{
           console.log(resp);
           this.initMembers();
-          this.openSnackBar('Usuario removido correctamente', 'Cerrar');
+          this.util.openSnackBar('Usuario removido correctamente', 'Cerrar');
         }, error => {
-          this.openSnackBar(error.error, 'Cerrar');
+          this.util.openSnackBar(error.error, 'Cerrar');
         });
       }
     });
 
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snack.open(message, action, {
-      duration: 2000,
-    });
-  }
 
 }

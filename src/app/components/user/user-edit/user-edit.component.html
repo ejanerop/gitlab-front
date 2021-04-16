@@ -18,6 +18,7 @@
                 <mat-form-field  appearance="outline" class="full-width">
                   <mat-label> Nombre </mat-label>
                   <input type="text" name="name" formControlName="name" matInput placeholder="">
+                  <mat-error>El nombre es requerido</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -26,6 +27,7 @@
                 <mat-form-field  appearance="outline" class="full-width">
                   <mat-label>Correo</mat-label>
                   <input type="email" name="email" formControlName="email" matInput placeholder="">
+                  <mat-error>{{emailError}}</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -34,6 +36,7 @@
                 <mat-form-field  appearance="outline" class="full-width">
                   <mat-label>Contraseña</mat-label>
                   <input type="password" name="password" formControlName="password" matInput placeholder="">
+                  <mat-error>{{passError}}</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -42,6 +45,7 @@
                 <mat-form-field  appearance="outline" class="full-width">
                   <mat-label>Repetir contraseña</mat-label>
                   <input type="password" name="password_confirmation" formControlName="password_confirmation" matInput placeholder="">
+                  <mat-error>{{passConfirmError}}</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -50,6 +54,7 @@
                 <mat-form-field  appearance="outline" class="full-width">
                   <mat-label>Token de Gitlab</mat-label>
                   <input type="text" name="token" formControlName="token" matInput placeholder="">
+                  <mat-error>El token de Gitlab es requerido</mat-error>
                 </mat-form-field>
               </div>
             </div>

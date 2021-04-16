@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Dialog } from '../dialog/dialog.component';
+import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GitUser } from 'src/app/models/git-user';
 import { GroupService } from 'src/app/services/group.service';
-import { environment } from 'src/environments/environment';
-import { Dialog } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-members',
@@ -17,7 +17,7 @@ export class MembersComponent implements OnInit {
   users : GitUser[] = [];
   form : FormGroup = new FormGroup({});
 
-  constructor( private groupService : GroupService , private fb : FormBuilder, public dialog: MatDialog , private snack : MatSnackBar  ) {
+  constructor( private groupService : GroupService , private fb : FormBuilder, public dialog: MatDialog , private util : UtilService ) {
     this.form = this.fb.group({
       'name' : ['']
     });
@@ -40,19 +40,16 @@ ngOnInit(): void {
     }).afterClosed().subscribe(confirmed => {
       if(confirmed) {
         this.groupService.deleteMember(environment.group_id, member ).subscribe(resp => {
-          console.log(resp);
           this.refresh();
-          this.openSnackBar('Usuario removido correctamente', 'Cerrar');
+          this.util.openSnackBar('Usuario removido correctamente', 'Cerrar');
         }, (error) => {
-          console.log(error);
-          this.openSnackBar(error.error, 'Cerrar');
+          this.util.openSnackBar(error.error, 'Cerrar');
         });
       }
     });
   }
   refresh() {
     this.groupService.members(environment.group_id).subscribe((resp : any) => {
-    console.log(resp);
     this.users = [];
     for (const item of resp.body) {
       this.users.push(new GitUser(
@@ -66,12 +63,6 @@ ngOnInit(): void {
       ))
     }
   });
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snack.open(message, action, {
-      duration: 2000,
-    });
   }
 
   find() {
