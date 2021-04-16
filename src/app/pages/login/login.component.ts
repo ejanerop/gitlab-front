@@ -9,45 +9,44 @@ import { UtilService } from 'src/app/services/util.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  form : FormGroup;
+  form    : FormGroup;
   loading : boolean = false;
 
-  constructor( private service : AuthService, private fb : FormBuilder, private util : UtilService, private router : Router ) {
+  constructor(
+    private service : AuthService,
+    private fb : FormBuilder,
+    private util : UtilService,
+    private router : Router
+  ) {
     this.form = new FormGroup({});
     this.createForm();
   }
 
-  createForm(){
-
+  createForm()
+  {
     this.form = this.fb.group({
       name : ['', Validators.required],
       password : ['', [Validators.required]],
     });
-
   }
-  openSnackBar(message: string, action: string) {
+
+  openSnackBar( message: string, action: string )
+  {
     this.util.openSnackBar(message, action);
   }
 
-  ngOnInit(): void {
-  }
-
-  login() {
-
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach(ctrl => {
+  login()
+  {
+    if ( this.form.invalid ) {
+      Object.values(this.form.controls).forEach( ctrl => {
         ctrl.markAsTouched();
       });
       return;
     }
-
-    console.log(this.form.value);
-
     this.loading = true;
-
-    this.service.login(this.form.value).subscribe((resp : any)=>{
+    this.service.login(this.form.value).subscribe( ( resp : any )=>{
       this.loading = false;
       this.router.navigateByUrl('/home');
       this.service.saveInfo( resp.body.token, resp.body.user.name );
@@ -65,5 +64,4 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
 }

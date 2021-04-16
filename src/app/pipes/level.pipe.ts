@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LevelPipe implements PipeTransform {
 
-  transform( value: number | undefined ): string {
-
+  transform( value: number | undefined ): string
+  {
     if (value == 5) {
       return 'Minimal access';
     } else if (value == 10) {
@@ -23,5 +23,4 @@ export class LevelPipe implements PipeTransform {
       return 'No access'
     }
   }
-
 }

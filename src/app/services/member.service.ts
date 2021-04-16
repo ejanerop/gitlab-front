@@ -14,22 +14,25 @@ export class MemberService {
 
   members()
   {
-    const url = `${this.url}/member`;
+    const url     = `${this.url}/member`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 
   member( id : string )
   {
-    const url = `${this.url}/member/${id}`;
+    const url     = `${this.url}/member/${id}`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 
   memberships( id : string )
   {
-    const url = `${this.url}/member/${id}/memberships`;
+    const url     = `${this.url}/member/${id}/memberships`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 }

@@ -13,40 +13,44 @@ import { Dialog } from '../../dialog/dialog.component';
 })
 export class UserListComponent implements OnInit {
 
-  loading : boolean = false;
-  users : User[] = [];
+  loading         : boolean  = false;
+  users           : User[]   = [];
   displayedColumns: string[] = ['name', 'email', 'actions'];
 
   constructor(
-    private userService : UserService ,
+    private userService : UserService,
     private router : Router,
-    private dialog: MatDialog ,
+    private dialog: MatDialog,
     private util : UtilService
   ) { }
 
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
     this.refresh();
   }
 
-  new() {
+  new()
+  {
     this.router.navigateByUrl('/user/new');
   }
 
-  edit( element : User ) {
+  edit( element : User )
+  {
     this.router.navigateByUrl(`/user/${element.id}`);
   }
 
-  delete(element : User) {
-    this.dialog.open(Dialog , {
+  delete( element : User )
+  {
+    this.dialog.open(Dialog, {
       data : {
         title : 'Está seguro que quiere eliminar el usuario?',
         content : 'Tenga en cuenta que la información se perderá.'
       }
     }).afterClosed().subscribe(confirmed => {
-      if(confirmed) {
+      if( confirmed ) {
         this.loading = true;
-        this.userService.deleteUser(element).subscribe(resp => {
+        this.userService.deleteUser(element).subscribe( () => {
           this.refresh();
           this.util.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
         }, (error) => {
@@ -58,12 +62,13 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  refresh() {
+  refresh()
+  {
     this.loading = true;
-    this.userService.users().subscribe( (resp : any) => {
+    this.userService.users().subscribe( ( resp : any ) => {
       this.users = [];
       for (const item of resp.body) {
-        this.users.push(new User( item.id , item.name , item.email ));
+        this.users.push(new User( item.id, item.name, item.email ));
       }
       this.loading = false;
     }, error => {
@@ -77,5 +82,4 @@ export class UserListComponent implements OnInit {
       }
     });
   }
-
 }

@@ -5,9 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ShortenPipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: string): string
+  {
     if ( value.length < 30 ) {
-      if (value.length == 0) {
+      if ( value.length == 0 ) {
         return '---';
       }
       return value;

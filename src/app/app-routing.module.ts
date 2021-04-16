@@ -10,18 +10,18 @@ import { AuthGuard } from './guards/auth.guard';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 
 const routes: Routes = [
-  {path : 'login' , component : LoginComponent},
+  {path : 'login', component : LoginComponent},
 
   {
-    path : '' ,
+    path : '',
     component : MainPageComponent,
     children : [
-      {path : 'home' , component : HomeComponent, canActivate : [AuthGuard]},
-      {path : 'user' , component : UserListComponent, canActivate : [AuthGuard]},
-      {path : 'user/:id' , component : UserEditComponent, canActivate : [AuthGuard]},
-      {path : 'project' , component : ProjectsComponent, canActivate : [AuthGuard]},
-      {path : 'member' , component : MembersComponent, canActivate : [AuthGuard]},
-      {path : '**' , pathMatch : 'full' , redirectTo : 'home'}
+      {path : 'home',     component : HomeComponent,     canActivate : [AuthGuard]},
+      {path : 'user',     component : UserListComponent, canActivate : [AuthGuard]},
+      {path : 'user/:id', component : UserEditComponent, canActivate : [AuthGuard]},
+      {path : 'project',  component : ProjectsComponent, canActivate : [AuthGuard]},
+      {path : 'member',   component : MembersComponent,  canActivate : [AuthGuard]},
+      {path : '**', pathMatch : 'full', redirectTo : 'home'}
     ]
   }
 ];

@@ -8,26 +8,38 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  templateUrl: './projects.component.html'
 })
 export class ProjectsComponent implements OnInit {
 
-  loading : boolean = false;
+  loading  : boolean   = false;
   projects : Project[] = [];
-  form : FormGroup = new FormGroup({});
+  form     : FormGroup = new FormGroup({});
 
-  constructor( private groupService : GroupService, private fb : FormBuilder, private util : UtilService ) {
+  constructor(
+    private groupService : GroupService,
+    private fb : FormBuilder,
+    private util : UtilService
+  ) {
     this.form = this.fb.group({
       'name' : ['']
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
     this.loading = true;
     this.groupService.projects(environment.group_id).subscribe(( resp : any ) => {
       for (const item of resp.body) {
-        let lenght = this.projects.push(new Project(item.id, item.name, item.description, item.name_with_namespace, item.avatar_url));
+        let lenght = this.projects.push(
+          new Project(
+            item.id,
+            item.name,
+            item.description,
+            item.name_with_namespace,
+            item.avatar_url
+          )
+        );
         if (item.owner) {
           this.projects[lenght-1].owner = new GitUser(
             item.owner.id,
@@ -35,28 +47,31 @@ export class ProjectsComponent implements OnInit {
             item.owner.username,
             item.owner.state,
             item.owner.web_url,
-            item.owner.avatar_url);
-          }
+            item.owner.avatar_url
+          );
         }
-        this.loading = false;
-      }, error => {
+      }
+      this.loading = false;
+    }, error => {
         this.loading = false;
         if ( error.status == 0 ) {
           this.util.openSnackBar( 'Sin respuesta del servidor', 'Cerrar' );
         }else{
           this.util.openSnackBar( error.error, 'Cerrar' );
         }
-      });
-    }
-
-    get name() {
-      return this.form.get('name')?.value;
-    }
-
-    find() {
-      this.projects.forEach(project => {
-        project.checkName(this.name);
-      });
-    }
-
+    });
   }
+
+  get name()
+  {
+    return this.form.get('name')?.value;
+  }
+
+  find()
+  {
+    this.projects.forEach(project => {
+      project.checkName(this.name);
+    });
+  }
+
+}

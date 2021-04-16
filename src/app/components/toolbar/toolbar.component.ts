@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -10,14 +10,20 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class ToolbarComponent {
 
-  constructor( private authService : AuthService, private util : UtilService, private router : Router ) { }
+  constructor(
+    private authService : AuthService,
+    private util : UtilService,
+    private router : Router
+  ) { }
 
-  login() {
+  login()
+  {
     this.router.navigateByUrl('/login');
   }
 
-  logout() {
-    this.authService.logout().subscribe(( resp : any ) => {
+  logout()
+  {
+    this.authService.logout().subscribe( () => {
       this.login();
       this.util.openSnackBar('Cierre de sesión exitoso', 'Cerrar');
     }, error => {
@@ -30,7 +36,8 @@ export class ToolbarComponent {
     });
   }
 
-  isAuth() {
+  isAuth()
+  {
     return this.authService.isAuth();
   }
 

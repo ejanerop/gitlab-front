@@ -14,29 +14,33 @@ export class GroupService {
 
   group( group : string )
   {
-    const url = `${this.url}/group/${group}`;
+    const url     = `${this.url}/group/${group}`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 
   members( group : string )
   {
-    const url = `${this.url}/group/${group}/members`;
+    const url     = `${this.url}/group/${group}/members`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 
-  deleteMember( group : string , user : string )
+  deleteMember( group : string, user : string )
   {
-    const url = `${this.url}/group/${group}/members/${user}`;
+    const url     = `${this.url}/group/${group}/members/${user}`;
     const headers = this.auth.getAuthHeader();
-    return this.http.delete(url , { observe : 'response', headers : headers });
+
+    return this.http.delete(url, { observe : 'response', headers : headers });
   }
 
   projects( group : string )
   {
-    const url = `${this.url}/group/${group}/projects`;
+    const url     = `${this.url}/group/${group}/projects`;
     const headers = this.auth.getAuthHeader();
-    return this.http.get(url , { observe : 'response', headers : headers });
+
+    return this.http.get(url, { observe : 'response', headers : headers });
   }
 }
