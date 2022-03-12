@@ -8,79 +8,76 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html'
+  templateUrl: './projects.component.html',
 })
 export class ProjectsComponent implements OnInit {
-
-  loading   : boolean   = false;
-  projects  : Project[] = [];
-  form      : FormGroup = new FormGroup({});
-  groupName : string    = '';
+  loading: boolean = false;
+  projects: Project[] = [];
+  form: FormGroup = new FormGroup({});
+  groupName: string = '';
 
   constructor(
-    private groupService : GroupService,
-    private fb : FormBuilder,
-    private util : UtilService
+    private groupService: GroupService,
+    private fb: FormBuilder,
+    private util: UtilService
   ) {
     this.form = this.fb.group({
-      'name' : ['']
+      name: [''],
     });
   }
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.initGroup();
     this.loading = true;
-    this.groupService.projects(environment.group_id).subscribe(( resp : any ) => {
-      for (const item of resp.body) {
-        let lenght = this.projects.push(
-          new Project(
-            item.id,
-            item.name,
-            item.description,
-            item.name_with_namespace,
-            item.avatar_url
-          )
-        );
-        if (item.owner) {
-          this.projects[lenght-1].owner = new GitUser(
-            item.owner.id,
-            item.owner.name,
-            item.owner.username,
-            item.owner.state,
-            item.owner.web_url,
-            item.owner.avatar_url
+    this.groupService.projects(environment.group_id).subscribe(
+      (resp: any) => {
+        for (const item of resp.body) {
+          let lenght = this.projects.push(
+            new Project(
+              item.id,
+              item.name,
+              item.description,
+              item.name_with_namespace,
+              item.avatar_url
+            )
           );
+          if (item.owner) {
+            this.projects[lenght - 1].owner = new GitUser(
+              item.owner.id,
+              item.owner.name,
+              item.owner.username,
+              item.owner.state,
+              item.owner.web_url,
+              item.owner.avatar_url
+            );
+          }
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        if (error.status == 0) {
+          this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+        } else {
+          this.util.openSnackBar(error.error, 'Cerrar');
         }
       }
-      this.loading = false;
-    }, error => {
-        this.loading = false;
-        if ( error.status == 0 ) {
-          this.util.openSnackBar( 'Sin respuesta del servidor', 'Cerrar' );
-        }else{
-          this.util.openSnackBar( error.error, 'Cerrar' );
-        }
-    });
+    );
   }
 
-  get name()
-  {
+  get name() {
     return this.form.get('name')?.value;
   }
 
-  initGroup()
-  {
-    this.groupService.group(environment.group_id).subscribe( ( resp : any ) => {
+  initGroup() {
+    this.groupService.group(environment.group_id).subscribe((resp: any) => {
       this.groupName = resp.body.name;
     });
   }
 
-  find()
-  {
-    this.projects.forEach(project => {
+  find() {
+    this.projects.forEach((project) => {
       project.checkName(this.name);
     });
   }
-
 }

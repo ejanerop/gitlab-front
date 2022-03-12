@@ -1,24 +1,32 @@
 <mat-card class="card" *ngIf="!loading">
   <form [formGroup]="form">
-  <div fxLayout="row" fxLayoutAlign="space-between start">
-    <mat-form-field appearance="outline">
-      <mat-label>Grupo</mat-label>
-      <input matInput type="text" readonly [value]="groupName">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Filtrar</mat-label>
-      <input matInput type="text" placeholder="nombre del proyecto ..." formControlName="name" (keyup)="find()">
-    </mat-form-field>
-  </div>
-</form>
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <mat-form-field appearance="outline">
+        <mat-label>Grupo</mat-label>
+        <input matInput type="text" readonly [value]="groupName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="nombre del proyecto ..."
+          formControlName="name"
+          (keyup)="find()"
+        />
+      </mat-form-field>
+    </div>
+  </form>
 </mat-card>
 
-<app-project *ngFor="let project of projects"
-             [id]="project.id.toString()"
-             [name_with_namespaces]="project.name_with_namespace"
-             [description]="project.description"
-             [avatar_url]="project.avatar_url"
-             [visible]="project.visible">
+<app-project
+  *ngFor="let project of projects"
+  [id]="project.id.toString()"
+  [name_with_namespaces]="project.name_with_namespace"
+  [description]="project.description"
+  [avatar_url]="project.avatar_url"
+  [visible]="project.visible"
+>
 </app-project>
 
 <app-loading [loading]="loading" [height]="80"></app-loading>
