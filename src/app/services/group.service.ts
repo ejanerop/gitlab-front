@@ -4,43 +4,38 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GroupService {
+  url: string = environment.api_url;
 
-  url : string = environment.api_url;
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
-  constructor( private http : HttpClient, private auth : AuthService ) { }
-
-  group( group : string )
-  {
-    const url     = `${this.url}/group/${group}`;
+  group(group: string) {
+    const url = `${this.url}/group/${group}`;
     const headers = this.auth.getAuthHeader();
 
-    return this.http.get(url, { observe : 'response', headers : headers });
+    return this.http.get(url, { observe: 'response', headers: headers });
   }
 
-  members( group : string )
-  {
-    const url     = `${this.url}/group/${group}/members`;
+  members(group: string) {
+    const url = `${this.url}/group/${group}/members`;
     const headers = this.auth.getAuthHeader();
 
-    return this.http.get(url, { observe : 'response', headers : headers });
+    return this.http.get(url, { observe: 'response', headers: headers });
   }
 
-  deleteMember( group : string, user : string )
-  {
-    const url     = `${this.url}/group/${group}/members/${user}`;
+  deleteMember(group: string, user: string) {
+    const url = `${this.url}/group/${group}/members/${user}`;
     const headers = this.auth.getAuthHeader();
 
-    return this.http.delete(url, { observe : 'response', headers : headers });
+    return this.http.delete(url, { observe: 'response', headers: headers });
   }
 
-  projects( group : string )
-  {
-    const url     = `${this.url}/group/${group}/projects`;
+  projects(group: string) {
+    const url = `${this.url}/group/${group}/projects`;
     const headers = this.auth.getAuthHeader();
 
-    return this.http.get(url, { observe : 'response', headers : headers });
+    return this.http.get(url, { observe: 'response', headers: headers });
   }
 }
