@@ -21,7 +21,7 @@ Modify the environment variables in `enviroments/enviroment.ts` and `enviroments
 
 ```
 export const environment = {
-  production: false,
+  /* ... */
   api_url: 'http://localhost:8000/api', // The URL of the Gitlab API
   group_id: '12345678' // The ID of the group that the user owns
 };
