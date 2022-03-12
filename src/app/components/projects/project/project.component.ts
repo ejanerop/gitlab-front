@@ -8,32 +8,30 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
+  styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent {
+  @Input() id: string = '';
+  @Input() name: string = '';
+  @Input() description: string = '';
+  @Input() name_with_namespaces: string = '';
+  @Input() avatar_url?: string = '';
+  @Input() visible: boolean = true;
 
-  @Input() id                   : string    = '';
-  @Input() name                 : string    = '';
-  @Input() description          : string    = '';
-  @Input() name_with_namespaces : string    = '';
-  @Input() avatar_url?          : string    = '';
-  @Input() visible              : boolean   = true;
-
-  loading                       : boolean   = false;
-  members                       : GitUser[] = [];
-  initialized                   : boolean   = false;
-  displayedColumns              : string[]  = ['name', 'actions'];
+  loading: boolean = false;
+  members: GitUser[] = [];
+  initialized: boolean = false;
+  displayedColumns: string[] = ['name', 'actions'];
 
   constructor(
-    private projectService : ProjectService,
+    private projectService: ProjectService,
     public dialog: MatDialog,
-    private util : UtilService
-  ) { }
+    private util: UtilService
+  ) {}
 
-  initMembers()
-  {
+  initMembers() {
     this.loading = true;
-    this.projectService.members( this.id ).subscribe(( resp : any ) => {
+    this.projectService.members(this.id).subscribe((resp: any) => {
       this.members = [];
       for (const item of resp.body) {
         this.members.push(
@@ -53,41 +51,43 @@ export class ProjectComponent {
     });
   }
 
-  get visibleTable()
-  {
-    return (this.initialized && this.members.length != 0 && !this.loading);
+  get visibleTable() {
+    return this.initialized && this.members.length != 0 && !this.loading;
   }
 
-
-  showMembers()
-  {
+  showMembers() {
     if (!this.initialized) {
       this.initMembers();
     }
   }
 
-  delete( user_id : string )
-  {
-    this.dialog.open(Dialog, {
-      data : {
-        title : 'Está seguro que quiere remover el usuario del proyecto?',
-        content : 'No tendrá acceso al proyecto.'
-      }
-    }).afterClosed().subscribe(confirmed => {
-      if(confirmed) {
-        this.loading = true;
-        this.projectService.deleteMember(this.id, user_id).subscribe(( resp : any ) =>{
-          this.loading = false;
-          this.initMembers();
-          this.util.openSnackBar('Usuario removido correctamente', 'Cerrar');
-        }, error => {
-          this.loading = false;
-          this.util.openSnackBar(error.error, 'Cerrar');
-        });
-      }
-    });
-
+  delete(user_id: string) {
+    this.dialog
+      .open(Dialog, {
+        data: {
+          title: 'Está seguro que quiere remover el usuario del proyecto?',
+          content: 'No tendrá acceso al proyecto.',
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.loading = true;
+          this.projectService.deleteMember(this.id, user_id).subscribe(
+            (resp: any) => {
+              this.loading = false;
+              this.initMembers();
+              this.util.openSnackBar(
+                'Usuario removido correctamente',
+                'Cerrar'
+              );
+            },
+            (error) => {
+              this.loading = false;
+              this.util.openSnackBar(error.error, 'Cerrar');
+            }
+          );
+        }
+      });
   }
-
-
 }
