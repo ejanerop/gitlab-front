@@ -4,17 +4,14 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-  constructor( private authService : AuthService ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get isAuth() {
     return this.authService.isAuth();
   }
-
 }
