@@ -2,12 +2,21 @@
   <mat-toolbar-row>
     <span>Gitlab Permission Manager</span>
     <span class="spacer"></span>
-    <button mat-icon-button *ngIf="!isAuth()" (click)="login()" matTooltip="Login">
+    <button
+      mat-icon-button
+      *ngIf="!isAuth()"
+      (click)="login()"
+      matTooltip="Login"
+    >
       <mat-icon>login</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="isAuth()" (click)="logout()" matTooltip="Logout">
+    <button
+      mat-icon-button
+      *ngIf="isAuth()"
+      (click)="logout()"
+      matTooltip="Logout"
+    >
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
-
