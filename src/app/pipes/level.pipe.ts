@@ -1,12 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'level'
+  name: 'level',
 })
 export class LevelPipe implements PipeTransform {
-
-  transform( value: number | undefined ): string
-  {
+  transform(value: number | undefined): string {
     if (value == 5) {
       return 'Minimal access';
     } else if (value == 10) {
@@ -19,8 +17,8 @@ export class LevelPipe implements PipeTransform {
       return 'Maintainer';
     } else if (value == 50) {
       return 'Owner';
-    }else {
-      return 'No access'
+    } else {
+      return 'No access';
     }
   }
 }
