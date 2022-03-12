@@ -9,76 +9,81 @@ import { Dialog } from '../../dialog/dialog.component';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
 })
 export class UserListComponent implements OnInit {
-
-  loading         : boolean  = false;
-  users           : User[]   = [];
+  loading: boolean = false;
+  users: User[] = [];
   displayedColumns: string[] = ['name', 'email', 'actions'];
 
   constructor(
-    private userService : UserService,
-    private router : Router,
+    private userService: UserService,
+    private router: Router,
     private dialog: MatDialog,
-    private util : UtilService
-  ) { }
+    private util: UtilService
+  ) {}
 
-
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.refresh();
   }
 
-  new()
-  {
+  new() {
     this.router.navigateByUrl('/user/new');
   }
 
-  edit( element : User )
-  {
+  edit(element: User) {
     this.router.navigateByUrl(`/user/${element.id}`);
   }
 
-  delete( element : User )
-  {
-    this.dialog.open(Dialog, {
-      data : {
-        title : 'Está seguro que quiere eliminar el usuario?',
-        content : 'Tenga en cuenta que la información se perderá.'
-      }
-    }).afterClosed().subscribe(confirmed => {
-      if( confirmed ) {
-        this.loading = true;
-        this.userService.deleteUser(element).subscribe( () => {
-          this.refresh();
-          this.util.openSnackBar('Usuario eliminado correctamente', 'Cerrar');
-        }, (error) => {
-          this.loading = false;
-          this.util.openSnackBar(error.error, 'Cerrar');
-        });
-      }
-    });
+  delete(element: User) {
+    this.dialog
+      .open(Dialog, {
+        data: {
+          title: 'Está seguro que quiere eliminar el usuario?',
+          content: 'Tenga en cuenta que la información se perderá.',
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.loading = true;
+          this.userService.deleteUser(element).subscribe(
+            () => {
+              this.refresh();
+              this.util.openSnackBar(
+                'Usuario eliminado correctamente',
+                'Cerrar'
+              );
+            },
+            (error) => {
+              this.loading = false;
+              this.util.openSnackBar(error.error, 'Cerrar');
+            }
+          );
+        }
+      });
   }
 
-  refresh()
-  {
+  refresh() {
     this.loading = true;
-    this.userService.users().subscribe( ( resp : any ) => {
-      this.users = [];
-      for (const item of resp.body) {
-        this.users.push(new User( item.id, item.name, item.email ));
-      }
-      this.loading = false;
-    }, error => {
-      console.error(error);
-      this.loading = false;
-      if (error.status == 0) {
-        this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
-      }else {
+    this.userService.users().subscribe(
+      (resp: any) => {
+        this.users = [];
+        for (const item of resp.body) {
+          this.users.push(new User(item.id, item.name, item.email));
+        }
         this.loading = false;
-        this.util.openSnackBar(error.error, 'Cerrar');
+      },
+      (error) => {
+        console.error(error);
+        this.loading = false;
+        if (error.status == 0) {
+          this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+        } else {
+          this.loading = false;
+          this.util.openSnackBar(error.error, 'Cerrar');
+        }
       }
-    });
+    );
   }
 }
