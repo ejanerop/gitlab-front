@@ -15,16 +15,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatTreeModule} from '@angular/material/tree';
-import { MatChipsModule } from "@angular/material/chips";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTreeModule } from '@angular/material/tree';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from "@angular/material/badge";
-
-
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [],
@@ -52,9 +50,9 @@ import { MatBadgeModule } from "@angular/material/badge";
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatBadgeModule
+    MatBadgeModule,
   ],
-  exports : [
+  exports: [
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -77,8 +75,7 @@ import { MatBadgeModule } from "@angular/material/badge";
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatBadgeModule
-  ]
+    MatBadgeModule,
+  ],
 })
-export class MaterialModule { }
-
+export class MaterialModule {}
