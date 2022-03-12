@@ -1,6 +1,8 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
-<div mat-dialog-content>{{data.content}}</div>
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>{{ data.content }}</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close color="secondary">Cancelar</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">Eliminar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">
+    Eliminar
+  </button>
 </div>
