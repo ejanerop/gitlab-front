@@ -1,86 +1,111 @@
-  <div fxLayout="row" fxLayoutAlign="center none">
-    <div fxFlex="40%" fxFlexFill>
-      <mat-card class="card">
-        <mat-card-title>
-          <div fxLayout="row" fxLayoutAlign="end start">
-            <div fxFlex="20%" fxFlexFill style="float: left;">
-              <button mat-raised-button color="primary" (click)="back()">
-                <mat-icon>arrow_back</mat-icon>
-              </button>
-            </div>
-            <div fxFlex="80%" fxFlexFill>
-              <ng-container *ngIf="!loading">
-                <span *ngIf="!isNew" style="float: right;">Editar usuario : {{name}}</span>
-                <span *ngIf="isNew" style="float: right;">Nuevo usuario</span>
-              </ng-container>
+<div fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="40%" fxFlexFill>
+    <mat-card class="card">
+      <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="end start">
+          <div fxFlex="20%" fxFlexFill style="float: left">
+            <button mat-raised-button color="primary" (click)="back()">
+              <mat-icon>arrow_back</mat-icon>
+            </button>
+          </div>
+          <div fxFlex="80%" fxFlexFill>
+            <ng-container *ngIf="!loading">
+              <span *ngIf="!isNew" style="float: right"
+                >Editar usuario : {{ name }}</span
+              >
+              <span *ngIf="isNew" style="float: right">Nuevo usuario</span>
+            </ng-container>
+          </div>
+        </div>
+      </mat-card-title>
+      <mat-card-title> </mat-card-title>
 
+      <mat-card-content>
+        <form class="example-form" [formGroup]="form" (ngSubmit)="save()">
+          <div fxLayout="row" fxLayoutAlign="center start">
+            <div fxFlex="100%" fxFlexFill>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label> Nombre </mat-label>
+                <input
+                  type="text"
+                  name="name"
+                  formControlName="name"
+                  matInput
+                  placeholder=""
+                />
+                <mat-error>El nombre es requerido</mat-error>
+              </mat-form-field>
             </div>
           </div>
-        </mat-card-title>
-        <mat-card-title>
-
-        </mat-card-title>
-
-        <mat-card-content>
-
-          <form class="example-form" [formGroup]="form" (ngSubmit)="save()">
-            <div fxLayout="row" fxLayoutAlign="center start">
-              <div fxFlex="100%" fxFlexFill>
-                <mat-form-field  appearance="outline" class="full-width">
-                  <mat-label> Nombre </mat-label>
-                  <input type="text" name="name" formControlName="name" matInput placeholder="">
-                  <mat-error>El nombre es requerido</mat-error>
-                </mat-form-field>
-              </div>
+          <div fxLayout="row" fxLayoutAlign="center start">
+            <div fxFlex="100%" fxFlexFill>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Correo</mat-label>
+                <input
+                  type="email"
+                  name="email"
+                  formControlName="email"
+                  matInput
+                  placeholder=""
+                />
+                <mat-error>{{ emailError }}</mat-error>
+              </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="center start">
-              <div fxFlex="100%" fxFlexFill>
-                <mat-form-field  appearance="outline" class="full-width">
-                  <mat-label>Correo</mat-label>
-                  <input type="email" name="email" formControlName="email" matInput placeholder="">
-                  <mat-error>{{emailError}}</mat-error>
-                </mat-form-field>
-              </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center start">
+            <div fxFlex="100%" fxFlexFill>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                  matInput
+                  placeholder=""
+                />
+                <mat-error>{{ passError }}</mat-error>
+              </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="center start">
-              <div fxFlex="100%" fxFlexFill>
-                <mat-form-field  appearance="outline" class="full-width">
-                  <mat-label>Contraseña</mat-label>
-                  <input type="password" name="password" formControlName="password" matInput placeholder="">
-                  <mat-error>{{passError}}</mat-error>
-                </mat-form-field>
-              </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center start">
+            <div fxFlex="100%" fxFlexFill>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Repetir contraseña</mat-label>
+                <input
+                  type="password"
+                  name="password_confirmation"
+                  formControlName="password_confirmation"
+                  matInput
+                  placeholder=""
+                />
+                <mat-error>{{ passConfirmError }}</mat-error>
+              </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="center start">
-              <div fxFlex="100%" fxFlexFill>
-                <mat-form-field  appearance="outline" class="full-width">
-                  <mat-label>Repetir contraseña</mat-label>
-                  <input type="password" name="password_confirmation" formControlName="password_confirmation" matInput placeholder="">
-                  <mat-error>{{passConfirmError}}</mat-error>
-                </mat-form-field>
-              </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start start">
+            <div fxFlex="100%" fxFlexFill>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Token de Gitlab</mat-label>
+                <input
+                  type="text"
+                  name="token"
+                  formControlName="token"
+                  matInput
+                  placeholder=""
+                />
+                <mat-error>El token de Gitlab es requerido</mat-error>
+              </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start start">
-              <div fxFlex="100%" fxFlexFill>
-                <mat-form-field  appearance="outline" class="full-width">
-                  <mat-label>Token de Gitlab</mat-label>
-                  <input type="text" name="token" formControlName="token" matInput placeholder="">
-                  <mat-error>El token de Gitlab es requerido</mat-error>
-                </mat-form-field>
-              </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start none">
+            <div fxFlex="100%" fxFlexFill>
+              <button type="submit" mat-flat-button color="primary">
+                Guardar
+              </button>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start none">
-              <div fxFlex="100%" fxFlexFill>
-                <button type="submit" mat-flat-button color="primary">Guardar</button>
-              </div>
-            </div>
-
-          </form>
-
-        </mat-card-content>
-
-      </mat-card>
-
-    </div>
-
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
+</div>
