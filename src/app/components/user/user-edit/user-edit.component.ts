@@ -66,12 +66,12 @@ export class UserEditComponent implements OnInit {
         (error) => {
           this.loading = false;
           if (error.status == 0) {
-            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+            this.util.openSnackBar('No response from the server', 'Close');
           } else if (error.status == 404) {
-            this.util.openSnackBar('Usuario no encontrado', 'Cerrar');
+            this.util.openSnackBar('User not found', 'Close');
             this.router.navigateByUrl('/user');
           } else {
-            this.util.openSnackBar(error.error, 'Cerrar');
+            this.util.openSnackBar(error.error, 'Close');
           }
         }
       );
@@ -85,27 +85,27 @@ export class UserEditComponent implements OnInit {
 
   get emailError() {
     if (this.form.get('email')?.hasError('required')) {
-      return 'El email es requerido';
+      return 'Email is required';
     } else {
-      return 'Introduce una direccion de correo válida';
+      return 'Input a valid email address';
     }
   }
 
   get passError() {
     if (this.form.get('password')?.hasError('required')) {
-      return 'La contraseña es requerida';
+      return 'Password is required';
     } else {
-      return 'La contraseña debe contener al menos 8 caracteres';
+      return 'It must contain al least 8 characters';
     }
   }
 
   get passConfirmError() {
     if (this.form.get('password_confirm')?.hasError('notEqual')) {
-      return 'Las confirmación de contraseña no coincide';
+      return "Password confirmation don't match";
     } else if (this.form.get('password_confirm')?.hasError('minlength')) {
-      return 'La contraseña debe contener al menos 8 caracteres';
+      return 'It must contain al least 8 characters';
     } else {
-      return 'La confirmación de contraseña es requerida';
+      return 'Password confirmation is required';
     }
   }
 
@@ -125,13 +125,13 @@ export class UserEditComponent implements OnInit {
         (resp: any) => {
           this.router.navigateByUrl('/user');
           this.util.openSnackBar(
-            `Usuario ${data.name} creado correctamente`,
-            'Cerrar'
+            `User ${data.name} created successfully`,
+            'Close'
           );
         },
         (error) => {
           if (error.status == 0) {
-            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+            this.util.openSnackBar('No response from the server', 'Close');
           }
           if (error.error.errors.name) {
             this.form.get('name')?.setErrors({ taken: true });
@@ -147,13 +147,13 @@ export class UserEditComponent implements OnInit {
         () => {
           this.router.navigateByUrl('/user');
           this.util.openSnackBar(
-            `Usuario ${data.name} editado correctamente`,
-            'Cerrar'
+            `User ${data.name} edited successfully`,
+            'Close'
           );
         },
         (error) => {
           if (error.status == 0) {
-            this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+            this.util.openSnackBar('No response from the server', 'Close');
           }
           if (error.error.errors.name) {
             this.form.get('name')?.setErrors({ taken: true });

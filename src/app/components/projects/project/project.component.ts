@@ -65,8 +65,8 @@ export class ProjectComponent {
     this.dialog
       .open(Dialog, {
         data: {
-          title: 'Está seguro que quiere remover el usuario del proyecto?',
-          content: 'No tendrá acceso al proyecto.',
+          title: 'Are you sure you want to remove the user from the project?',
+          content: "He won't have access to the project.",
         },
       })
       .afterClosed()
@@ -77,14 +77,11 @@ export class ProjectComponent {
             (resp: any) => {
               this.loading = false;
               this.initMembers();
-              this.util.openSnackBar(
-                'Usuario removido correctamente',
-                'Cerrar'
-              );
+              this.util.openSnackBar('User removed succesfully', 'Close');
             },
             (error) => {
               this.loading = false;
-              this.util.openSnackBar(error.error, 'Cerrar');
+              this.util.openSnackBar(error.error, 'Close');
             }
           );
         }

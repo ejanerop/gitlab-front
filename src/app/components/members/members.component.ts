@@ -40,9 +40,8 @@ export class MembersComponent implements OnInit {
     this.dialog
       .open(Dialog, {
         data: {
-          title: 'Está seguro que quiere remover el usuario del grupo?',
-          content:
-            'Se le removerá también el permiso a todos los proyectos del grupo.',
+          title: 'Are you sure you want to remove the user from the group?',
+          content: 'All the projects permissions will also be removed.',
         },
       })
       .afterClosed()
@@ -54,14 +53,11 @@ export class MembersComponent implements OnInit {
             .subscribe(
               () => {
                 this.refresh();
-                this.util.openSnackBar(
-                  'Usuario removido correctamente',
-                  'Cerrar'
-                );
+                this.util.openSnackBar('User removed succesfully', 'Close');
               },
               (error) => {
                 this.loading = false;
-                this.util.openSnackBar(error.error, 'Cerrar');
+                this.util.openSnackBar(error.error, 'Close');
               }
             );
         }
@@ -92,9 +88,9 @@ export class MembersComponent implements OnInit {
         console.error(error);
         this.loading = false;
         if (error.status == 0) {
-          this.util.openSnackBar('Sin respuesta desde el servidor.', 'Cerrar');
+          this.util.openSnackBar('No response from server.', 'Close');
         } else {
-          this.util.openSnackBar(error.error, 'Cerrar');
+          this.util.openSnackBar(error.error, 'Close');
         }
       }
     );

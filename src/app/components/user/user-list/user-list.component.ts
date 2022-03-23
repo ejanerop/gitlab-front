@@ -39,8 +39,8 @@ export class UserListComponent implements OnInit {
     this.dialog
       .open(Dialog, {
         data: {
-          title: 'Está seguro que quiere eliminar el usuario?',
-          content: 'Tenga en cuenta que la información se perderá.',
+          title: 'Are you sure you want to delete the user?',
+          content: 'All information will be lost.',
         },
       })
       .afterClosed()
@@ -50,14 +50,11 @@ export class UserListComponent implements OnInit {
           this.userService.deleteUser(element).subscribe(
             () => {
               this.refresh();
-              this.util.openSnackBar(
-                'Usuario eliminado correctamente',
-                'Cerrar'
-              );
+              this.util.openSnackBar('User deleted succesfully', 'Close');
             },
             (error) => {
               this.loading = false;
-              this.util.openSnackBar(error.error, 'Cerrar');
+              this.util.openSnackBar(error.error, 'Close');
             }
           );
         }
@@ -78,10 +75,10 @@ export class UserListComponent implements OnInit {
         console.error(error);
         this.loading = false;
         if (error.status == 0) {
-          this.util.openSnackBar('Sin respuesta del servidor', 'Cerrar');
+          this.util.openSnackBar('No response from the server', 'Close');
         } else {
           this.loading = false;
-          this.util.openSnackBar(error.error, 'Cerrar');
+          this.util.openSnackBar(error.error, 'Close');
         }
       }
     );

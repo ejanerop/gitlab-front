@@ -47,18 +47,18 @@ export class LoginComponent {
         this.loading = false;
         this.router.navigateByUrl('/home');
         this.service.saveInfo(resp.body.token, resp.body.user.name);
-        this.openSnackBar('Inicio de sesión exitoso', 'Cerrar');
+        this.openSnackBar("You're loged", 'Close');
       },
       (error) => {
         if (error.status == 422) {
           this.loading = false;
-          this.openSnackBar('Usuario y/o contraseña incorrectos', 'Cerrar');
+          this.openSnackBar('Login information incorrect', 'Close');
           Object.values(this.form.controls).forEach((ctrl) => {
             ctrl.setErrors({ incorrect: true });
           });
         } else {
           this.loading = false;
-          this.openSnackBar('Error en el servidor', 'Cerrar');
+          this.openSnackBar('Server error', 'Close');
         }
       }
     );

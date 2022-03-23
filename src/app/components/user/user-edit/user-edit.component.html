@@ -11,9 +11,9 @@
           <div fxFlex="80%" fxFlexFill>
             <ng-container *ngIf="!loading">
               <span *ngIf="!isNew" style="float: right"
-                >Editar usuario : {{ name }}</span
+                >Edit user : {{ name }}</span
               >
-              <span *ngIf="isNew" style="float: right">Nuevo usuario</span>
+              <span *ngIf="isNew" style="float: right">New user</span>
             </ng-container>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <div fxLayout="row" fxLayoutAlign="center start">
             <div fxFlex="100%" fxFlexFill>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label> Nombre </mat-label>
+                <mat-label> Name </mat-label>
                 <input
                   type="text"
                   name="name"
@@ -33,14 +33,14 @@
                   matInput
                   placeholder=""
                 />
-                <mat-error>El nombre es requerido</mat-error>
+                <mat-error>Name is required</mat-error>
               </mat-form-field>
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="center start">
             <div fxFlex="100%" fxFlexFill>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Correo</mat-label>
+                <mat-label>Email</mat-label>
                 <input
                   type="email"
                   name="email"
@@ -55,7 +55,7 @@
           <div fxLayout="row" fxLayoutAlign="center start">
             <div fxFlex="100%" fxFlexFill>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Contraseña</mat-label>
+                <mat-label>Password</mat-label>
                 <input
                   type="password"
                   name="password"
@@ -70,7 +70,7 @@
           <div fxLayout="row" fxLayoutAlign="center start">
             <div fxFlex="100%" fxFlexFill>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Repetir contraseña</mat-label>
+                <mat-label>Retype password</mat-label>
                 <input
                   type="password"
                   name="password_confirmation"
@@ -85,7 +85,7 @@
           <div fxLayout="row" fxLayoutAlign="start start">
             <div fxFlex="100%" fxFlexFill>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Token de Gitlab</mat-label>
+                <mat-label>Gitlab token</mat-label>
                 <input
                   type="text"
                   name="token"
@@ -93,14 +93,14 @@
                   matInput
                   placeholder=""
                 />
-                <mat-error>El token de Gitlab es requerido</mat-error>
+                <mat-error>Gitlab token is required</mat-error>
               </mat-form-field>
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="start none">
             <div fxFlex="100%" fxFlexFill>
               <button type="submit" mat-flat-button color="primary">
-                Guardar
+                Save
               </button>
             </div>
           </div>
